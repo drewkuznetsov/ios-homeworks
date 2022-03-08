@@ -10,21 +10,11 @@ import UIKit
 class FeedViewController: UIViewController {
 
     private var readButton: UIButton {
-        let buttonWidth: CGFloat = 100
-        let buttonHight: CGFloat = 50
-        let x = view.center.x - buttonWidth/2
-        let y = view.center.y - buttonHight/2
-        let frame = CGRect(x: x, y: y, width: buttonWidth, height: buttonHight)
         
-        let button = UIButton(frame: frame)
-        button.backgroundColor = .blue
-        button.layer.cornerRadius = 12
-        button.clipsToBounds = true
-        button.setTitle("View Post", for: .normal)
-        button.setTitleColor(.white , for: .normal)
-        
+        let button = CustomButton(center: view.center,textTitle: "View Post")
         button.addTarget(self, action: #selector(didTabButton), for: .touchUpInside)
         return button
+        
     }
     
     override func viewDidLoad() {

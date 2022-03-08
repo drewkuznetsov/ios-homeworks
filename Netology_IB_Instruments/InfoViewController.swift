@@ -10,19 +10,8 @@ import UIKit
 class InfoViewController: UIViewController {
 
     private var alertButton: UIButton {
-        let buttonWidth: CGFloat = 100
-        let buttonHight: CGFloat = 50
-        let x = view.center.x - buttonWidth/2
-        let y = view.center.y - buttonHight/2
-        let frame = CGRect(x: x, y: y, width: buttonWidth, height: buttonHight)
-        
-        let button = UIButton(frame: frame)
-        button.backgroundColor = .blue
-        button.layer.cornerRadius = 12
-        button.clipsToBounds = true
-        button.setTitle("Show Alert", for: .normal)
-        button.setTitleColor(.white , for: .normal)
-        
+       
+        let button = CustomButton(center: view.center, textTitle: "Show Alert")
         button.addTarget(self, action: #selector(didTabButton), for: .touchUpInside)
         return button
     }

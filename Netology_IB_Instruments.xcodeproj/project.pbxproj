@@ -17,6 +17,7 @@
 		7AD761C227CFA396000D643E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD761C127CFA396000D643E /* SceneDelegate.swift */; };
 		7AD761C927CFA397000D643E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AD761C827CFA397000D643E /* Assets.xcassets */; };
 		7AD761CC27CFA397000D643E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AD761CA27CFA397000D643E /* LaunchScreen.storyboard */; };
+		7AE5AEFA27D74BD400243A24 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE5AEF927D74BD400243A24 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		7AD761C827CFA397000D643E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7AD761CB27CFA397000D643E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7AD761CD27CFA397000D643E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AE5AEF927D74BD400243A24 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				7A539F5327D73D4D0060C327 /* MainTabBarController.swift */,
 				7A539F5627D73DC60060C327 /* ProfileViewController.swift */,
 				7A539F5A27D73DF80060C327 /* FeedViewController.swift */,
+				7AE5AEF927D74BD400243A24 /* CustomButton.swift */,
 				7A539F6027D73E880060C327 /* PostViewController.swift */,
 				7A539F6327D73EDC0060C327 /* InfoViewController.swift */,
 				7A539F5D27D73E670060C327 /* Post.swift */,
@@ -150,6 +153,7 @@
 			files = (
 				7AD761C027CFA396000D643E /* AppDelegate.swift in Sources */,
 				7A539F5727D73DC60060C327 /* ProfileViewController.swift in Sources */,
+				7AE5AEFA27D74BD400243A24 /* CustomButton.swift in Sources */,
 				7A539F6127D73E880060C327 /* PostViewController.swift in Sources */,
 				7A539F5B27D73DF80060C327 /* FeedViewController.swift in Sources */,
 				7A539F5E27D73E670060C327 /* Post.swift in Sources */,
