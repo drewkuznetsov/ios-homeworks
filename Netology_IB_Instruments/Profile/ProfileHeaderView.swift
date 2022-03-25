@@ -113,7 +113,7 @@ class ProfileHeaderView: UIView {
         super.init(frame: frame)
         backgroundColor = .none
         
-        self.imageSize = self.frame.width / 4
+        self.imageSize = self.frame.width / 3
         
         setupImage()
         setupButton()
@@ -174,7 +174,7 @@ class ProfileHeaderView: UIView {
         
         self.addSubview(statusTextField)
         constraintArray.append(statusTextField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: edge))
-        constraintArray.append(statusTextField.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -34))
+        constraintArray.append(statusTextField.bottomAnchor.constraint(equalTo: statusButton.topAnchor, constant: -30))
         constraintArray.append(statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -edge))
         constraintArray.append(statusTextField.heightAnchor.constraint(equalToConstant: 40))
     }

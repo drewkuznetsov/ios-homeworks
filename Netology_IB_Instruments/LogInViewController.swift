@@ -49,6 +49,9 @@ class LogInViewController: UIViewController {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
+        let leftView = UIView(frame: CGRect( x: 0, y: 0, width: 10, height: 2))
+        textField.leftView = leftView
+        textField.leftViewMode = .always
         textField.placeholder = "LogIn"
         textField.backgroundColor = .systemGray6
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +69,9 @@ class LogInViewController: UIViewController {
         textField.isSecureTextEntry = true
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
+        let leftView = UIView(frame: CGRect( x: 0, y: 0, width: 10, height: 2))
+        textField.leftView = leftView
+        textField.leftViewMode = .always
         textField.placeholder = "Password"
         textField.backgroundColor = .systemGray6
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -81,13 +87,13 @@ class LogInViewController: UIViewController {
     private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = #colorLiteral(red: 0.2863293588, green: 0.523583889, blue: 0.8017535806, alpha: 1)
+        button.backgroundColor = .systemGray5
         button.setImage(UIImage(named: "blue_pixel.png"), for: .normal)
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.clipsToBounds = true
         button.layer.cornerRadius = 10
-        button.isHidden = true
+        button.isEnabled = false
         button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
         return button
     }()
@@ -96,9 +102,7 @@ class LogInViewController: UIViewController {
     
     private let imageSize: CGFloat = 100
     private let edge: CGFloat = 16
-    
-    private var bottomConstraint = NSLayoutConstraint()
-    
+        
     private var constraintArray = [NSLayoutConstraint]()
     
     
@@ -112,7 +116,7 @@ class LogInViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.view.backgroundColor = .white
         
-        bottomConstraint = scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+
         
         setupView()
     }
@@ -129,8 +133,7 @@ class LogInViewController: UIViewController {
         constraintArray.append(scrollView.topAnchor.constraint(equalTo: self.view.topAnchor))
         constraintArray.append(scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor))
         constraintArray.append(scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor))
-        
-        bottomConstraint.isActive = true
+        constraintArray.append(scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0))
         
         scrollView.addSubview(contentView)
         constraintArray.append(contentView.topAnchor.constraint(equalTo: scrollView.topAnchor))
@@ -139,6 +142,9 @@ class LogInViewController: UIViewController {
         constraintArray.append(contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor))
         
         setupContentView()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.forcedHideKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
     }
     
     private func setupContentView() {
@@ -155,7 +161,7 @@ class LogInViewController: UIViewController {
         stackView.addArrangedSubview(loginTextField)
         stackView.addArrangedSubview(passwordTextField)
         constraintArray.append(stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: edge))
-        constraintArray.append(stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 120))
+        constraintArray.append(stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 70))
         constraintArray.append(stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -edge))
         constraintArray.append(stackView.heightAnchor.constraint(equalToConstant: 100))
         
@@ -203,9 +209,7 @@ class LogInViewController: UIViewController {
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
         
-        bottomConstraint.isActive = false
-        bottomConstraint.constant = 0
-        bottomConstraint.isActive = true
+        self.scrollView.contentOffset = .zero
     }
     
     @objc private func didTapButton() {
@@ -215,7 +219,14 @@ class LogInViewController: UIViewController {
     
     @objc private func textEdit() {
         if let b1 = loginTextField.text?.isEmpty, let b2 = passwordTextField.text?.isEmpty {
-            loginButton.isHidden = b1 || b2
+//            loginButton.isHidden = b1 || b2
+            if !(b1 || b2) {
+                loginButton.backgroundColor = #colorLiteral(red: 0.2863293588, green: 0.523583889, blue: 0.8017535806, alpha: 1)
+                loginButton.isEnabled = true
+            } else {
+                loginButton.backgroundColor = .systemGray5
+                loginButton.isEnabled = false
+            }
         }
     }
     
@@ -229,16 +240,12 @@ class LogInViewController: UIViewController {
             return
         }
         
-        bottomConstraint.isActive = false
-        bottomConstraint.constant = -keyboardFrame.cgRectValue.height
-        bottomConstraint.isActive = true
+        self.scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.cgRectValue.height)
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        
-        bottomConstraint.isActive = false
-        bottomConstraint.constant = 0
-        bottomConstraint.isActive = true
+       
+        self.scrollView.contentOffset = .zero
     }
     
     @objc private func loginTextDidEnd() {
@@ -254,6 +261,11 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func passwordTextExit() {
+        passwordTextField.endEditing(true)
+    }
+    
+    @objc private func forcedHideKeyboard() {
+        loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
     }
 }
