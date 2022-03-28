@@ -11,9 +11,12 @@ class HeaderCell: UITableViewCell {
     
     private lazy var headerView: ProfileHeaderView = {
         let header = ProfileHeaderView(frame: self.bounds)
+        header.animatePhotoDelegate = self
         header.translatesAutoresizingMaskIntoConstraints = false
         return header
     }()
+    
+    var photoDelegat: AnimatePhoto?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,4 +46,11 @@ class HeaderCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: animated)
     }
+}
+
+extension HeaderCell: AnimatePhoto {
+    func showImagePhoto() {
+        self.photoDelegat?.showImagePhoto()
+    }
+    
 }

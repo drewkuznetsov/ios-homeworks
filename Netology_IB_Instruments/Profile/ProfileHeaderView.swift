@@ -21,6 +21,14 @@ class ProfileHeaderView: UIView {
     
     //MARK: - Views
     
+    private lazy var backgroundImageView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.layer.cornerRadius = imageSize / 2
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private lazy var profileImageView: UIImageView = {
         
         let imageView = UIImageView()
@@ -106,6 +114,9 @@ class ProfileHeaderView: UIView {
     
     private var constraintArray = [NSLayoutConstraint]()
     
+    var animatePhotoDelegate: AnimatePhoto?
+    let tapGestureRecognizer = UITapGestureRecognizer()
+    
     //MARK: - Setup Views
     
     override init(frame: CGRect) {
@@ -114,6 +125,9 @@ class ProfileHeaderView: UIView {
         backgroundColor = .none
         
         self.imageSize = self.frame.width / 3
+        
+        tapGestureRecognizer.addTarget(self, action: #selector(tapImage))
+        self.backgroundImageView.addGestureRecognizer(tapGestureRecognizer)
         
         setupImage()
         setupButton()
@@ -134,12 +148,24 @@ class ProfileHeaderView: UIView {
     
     private func setupImage() {
 
+        self.addSubview(backgroundImageView)
         self.addSubview(profileImageView)
     
         constraintArray.append(profileImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: edge))
         constraintArray.append(profileImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edge))
         constraintArray.append(profileImageView.heightAnchor.constraint(equalToConstant: imageSize))
         constraintArray.append(profileImageView.widthAnchor.constraint(equalToConstant: imageSize))
+        
+        constraintArray.append(backgroundImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: edge))
+        constraintArray.append(backgroundImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: edge))
+        constraintArray.append(backgroundImageView.heightAnchor.constraint(equalToConstant: 100))
+        constraintArray.append(backgroundImageView.widthAnchor.constraint(equalToConstant: 100))
+        
+//        constraintArray.append(backgroundImageView.leadingAnchor.constraint(equalTo: profileImageView.leadingAnchor))
+//        constraintArray.append(backgroundImageView.topAnchor.constraint(equalTo: profileImageView.topAnchor))
+//        constraintArray.append(backgroundImageView.trailingAnchor.constraint(equalTo: profileImageView.trailingAnchor))
+//        constraintArray.append(backgroundImageView.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor))
+//
         
     }
     
@@ -222,6 +248,10 @@ class ProfileHeaderView: UIView {
         buttonTitle = ButtonState.edit.rawValue
         statusButton.setTitle(buttonTitle, for: .normal)
         statusTextField.isHidden = true
+    }
+    
+    @objc private func tapImage() {
+        self.animatePhotoDelegate?.showImagePhoto()
     }
     
 }
