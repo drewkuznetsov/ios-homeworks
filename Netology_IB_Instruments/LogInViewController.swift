@@ -240,7 +240,13 @@ class LogInViewController: UIViewController {
             return
         }
         
-        self.scrollView.contentOffset = CGPoint(x: 0, y: keyboardFrame.cgRectValue.height)
+       
+        let heightOffset = loginButton.frame.maxY - keyboardFrame.cgRectValue.minY + edge
+        
+        if heightOffset > 0 {
+            self.scrollView.contentOffset = CGPoint(x: 0, y: heightOffset)
+        }
+        
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
